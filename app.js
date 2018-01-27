@@ -5,6 +5,10 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
+const { url, port, db } = require('./config.js');
+
+mongoose.connect(`mongodb://${url}:${port}/${db}`, { useMongoClient: true });
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -15,7 +19,7 @@ const app = express();
 app.use(expressLayouts);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('layout','layouts/main');
+app.set('layout', 'layouts/main');
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
